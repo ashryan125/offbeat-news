@@ -1,11 +1,16 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
+
 // create our Post model
 class Post extends Model {
+  // change api route for router.put to Post.votes(req.body { Vote })
   static upvote(body, models) {
-    return models.Vote.create({
+    console.log('error in Post model extends Model');
+    return models.Votes.create({
       user_id: body.user_id,
-      post_id: body.post_id
+      post_id: body.post_id,
+      upvote: body.upvote,
+      downvote: body.downvote
     }).then(() => {
       return Post.findOne({
         where: {
@@ -13,14 +18,22 @@ class Post extends Model {
         },
         attributes: [
           'id',
-          'title',
           'post_contents',
-          'created_at'
+          'title',
+          'created_at',
+          [
+            sequelize.literal('(SELECT COUNT(NULLIF(votes.upvote, 0)) FROM votes WHERE post.id = votes.post_id)'),
+            'upvotesCount',
+          ],
+          [
+            sequelize.literal('(SELECT COUNT(NULLIF(votes.downvote, 0)) FROM votes WHERE post.id = votes.post_id)'),
+            'downvotesCount',
+          ]
         ],
         include: [
           {
             model: models.Comment,
-            attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+            attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at' ],
             include: {
               model: models.User,
               attributes: ['username']
@@ -45,12 +58,16 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: false
     },
-    post_contents: {
+    post_url: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         isURL: true
       }
+    },
+    post_contents: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     user_id: {
       type: DataTypes.INTEGER,

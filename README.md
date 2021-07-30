@@ -74,4 +74,13 @@ THEN I am able to view comments but I am prompted to log in again before I can a
 ```
 ---
 ## Screenshots
-![Offbeat News gif](#)
+### Home Page View
+![Homepage](public/imgs/loggedIn-homepage.png)
+### Login Page
+![Login](public/imgs/login-page.png)
+### Dashboard
+![Dashboard](public/imgs/loggedIn-dashboard.png)
+### Edit Post
+![Dashboard](public/imgs/loggedIn-edit-post.png)
+### Add Comment / Vote on Post
+![Dashboard](public/imgs/loggedIn-post.png)

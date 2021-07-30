@@ -1,7 +1,10 @@
 # offbeat-news
 
 ## Description
-An application that can be used to track and manage a company's employees
+A tech news blog where you can post links, leave a review, add comments and downvote/upvote other's posts!
+
+### Deployed Site
+[Offbeat News Here!](#)
 
 ---
 
@@ -16,7 +19,7 @@ An application that can be used to track and manage a company's employees
 
 ## Built With
 * JavaScript
-* Tailwinds CSS Frameworks
+* Bootstrap CSS Frameworks
 * Express-Handlebars
 * Express, Express Sessions
 * MySQL, Sequelize ORM
@@ -25,7 +28,6 @@ An application that can be used to track and manage a company's employees
 * Bcrypt
 
 ---
-
 
 ## User Story
 ```
@@ -73,5 +75,3 @@ THEN I am able to view comments but I am prompted to log in again before I can a
 ---
 ## Screenshots
 ![Offbeat News gif](#)
-
-[Fullsize video can be found here!](#)

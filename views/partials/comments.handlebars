@@ -1,10 +1,10 @@
-<div class="comments">
+<div class="mx-auto item-width mt-4">
   {{#each this}}
-  <section class="comment">
-    <div class="meta">
-      {{user.username}} on {{format_date created_at}}
+  <section class="card bg-dark mt-2">
+    <div class="url pt-3 ps-3">
+      <strong>{{user.username}}</strong> on {{format_date created_at}}
     </div>
-    <div class="text">
+    <div class="card-body url ps-4">
       {{comment_text}}
     </div>
   </section>

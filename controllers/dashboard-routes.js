@@ -11,8 +11,9 @@ router.get("/", withAuth, (req, res) => {
     },
     attributes: [
       "id",
-      "post_contents",
       "title",
+      "post_url",
+      "post_contents",
       "created_at",
       [
         sequelize.literal(
@@ -60,8 +61,9 @@ router.get("/edit/:id", withAuth, (req, res) => {
     },
     attributes: [
       "id",
-      "post_contents",
       "title",
+      "post_url",
+      "post_contents",
       "created_at",
       [
         sequelize.literal(

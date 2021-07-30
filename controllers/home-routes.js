@@ -9,9 +9,22 @@ router.get("/", (req, res) => {
   Post.findAll({
     attributes: [
       "id",
-      "post_contents",
       "title",
+      "post_url",
+      "post_contents",
       "created_at",
+      [
+        sequelize.literal(
+          "(SELECT COUNT(NULLIF(votes.upvote, 0)) FROM votes WHERE post.id = votes.post_id)"
+        ),
+        "upvotesCount",
+      ],
+      [
+        sequelize.literal(
+          "(SELECT COUNT(NULLIF(votes.downvote, 0)) FROM votes WHERE post.id = votes.post_id)"
+        ),
+        "downvotesCount",
+      ],
     ],
     include: [
       {
@@ -50,9 +63,22 @@ router.get("/post/:id", (req, res) => {
     },
     attributes: [
       "id",
-      "post_contents",
       "title",
-      "created_at"
+      "post_url",
+      "post_contents",
+      "created_at",
+      [
+        sequelize.literal(
+          "(SELECT COUNT(NULLIF(votes.upvote, 0)) FROM votes WHERE post.id = votes.post_id)"
+        ),
+        "upvotesCount",
+      ],
+      [
+        sequelize.literal(
+          "(SELECT COUNT(NULLIF(votes.downvote, 0)) FROM votes WHERE post.id = votes.post_id)"
+        ),
+        "downvotesCount",
+      ],
     ],
     include: [
       {

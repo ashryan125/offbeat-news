@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const sequelize = require('../../config/connection');
-const { Post, User, Comment } = require('../../models');
+const { Post, User, Comment, Votes } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // get all posts
@@ -95,6 +95,7 @@ router.get('/:id', (req, res) => {
 router.post('/', withAuth, (req, res) => {
   Post.create({
     title: req.body.title,
+    post_url: req.body.post_url,
     post_contents: req.body.post_contents,
     user_id: req.session.user_id
   })
@@ -107,10 +108,8 @@ router.post('/', withAuth, (req, res) => {
 
 // allow voting on a post
 router.put('/upvote', withAuth, (req, res) => {
-  // need to update associations to allow posting/editing of voting??
   if (req.session) {
     console.log(req.body);
-    // pass session id along with all destructured properties on req.body
     Post.upvote({ ...req.body, user_id: req.session.user_id }, { Votes, Comment, User })
       .then(updatedVoteData => res.json(updatedVoteData))
       .catch(err => {

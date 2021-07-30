@@ -1,16 +1,32 @@
 <ol class="post-list">
-    {{#each posts as |post|}}
+  {{#each posts as |post|}}
   <li>
-    <article class="post">
-      <div class="title">
-        <a href="{{post_contents}}" target="_blank">{{title}}</a>
-        <span>({{post_contents}})</span>
-      </div>
-      <div class="meta">
-        <a href="/post/{{id}}">{{comments.length}} comment(s)</a>
-      </div>
+    <article class="card mx-auto mt-4 item-width">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <div class="d-inline">
+            <a class="card-title title" href="/post/{{id}}">{{title}}</a>
+            <span class="url">({{post_url}})</span>
+          </div>
+          <div class="url d-inline float-end">
+            by
+            <strong>{{user.username}}</strong>
+            on
+            {{format_date created_at}}
+          </div>
+        </div>
+
+        <div class="card-body gray-bg">
+          <p class="review">Review: {{post_contents}} </p>
+          <div>
+            {{upvotesCount}}
+            Upvote(s) |
+            {{downvotesCount}}
+            Downvote(s) |
+               <a class="comment-link" href="/post/{{post.id}}">{{post.comments.length}} {{format_plural "comment" post.comments.length}}</a>
+          </div>
+        </div>
     </article>
   </li>
-   {{/each}}
+  {{/each}}
 </ol>
-

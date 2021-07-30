@@ -23,4 +23,4 @@ async function downvoteClickHandler(event) {
     }
   };
   
-  document.querySelector('.downvote-btn').addEventListener('click', downvoteClickHandler);
+  document.querySelector('#downvote-btn').addEventListener('click', downvoteClickHandler);

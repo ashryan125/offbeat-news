@@ -4,7 +4,7 @@
 A tech news blog where you can post links, leave a review, add comments and downvote/upvote other's posts!
 
 ### Deployed Site
-[Offbeat News Here!](#)
+[Offbeat News Here!](https://offbeat-news.herokuapp.com/)
 
 ---
 

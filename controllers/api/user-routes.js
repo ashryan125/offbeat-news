@@ -16,14 +16,14 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   User.findOne({
-    attributes: { exclude: ['password'] },
+    attributes: { exclude: ["password"], include: ["id", "username"] },
     where: {
-      id: req.params.id
+      id: req.params.id,
     },
     include: [
       {
         model: Post,
-        attributes: ['id', 'title', 'post_contents', 'created_at']
+        attributes: ['id', 'title', 'post_contents', 'post_url', 'created_at']
       },
       {
         model: Comment,
@@ -32,6 +32,12 @@ router.get('/:id', (req, res) => {
           model: Post,
           attributes: ['title']
         }
+      },
+      {
+        model: Post,
+        attributes: ['title'],
+        through: Votes,
+        as: 'voted_posts'
       }
     ]
   })
@@ -48,7 +54,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
-
+// create a user
 router.post('/', (req, res) => {
   User.create({
     username: req.body.username,
@@ -70,6 +76,7 @@ router.post('/', (req, res) => {
     });
 });
 
+// login route
 router.post('/login', (req, res) => {
   User.findOne({
     where: {
@@ -98,16 +105,6 @@ router.post('/login', (req, res) => {
   });
 });
 
-router.post('/logout', (req, res) => {
-  if (req.session.loggedIn) {
-    req.session.destroy(() => {
-      res.status(204).end();
-    });
-  }
-  else {
-    res.status(404).end();
-  }
-});
 
 router.put('/:id', (req, res) => {
   User.update(req.body, {
@@ -127,6 +124,18 @@ router.put('/:id', (req, res) => {
       console.log(err);
       res.status(500).json(err);
     });
+});
+
+// logout
+router.post('/logout', (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  }
+  else {
+    res.status(404).end();
+  }
 });
 
 router.delete('/:id', (req, res) => {
